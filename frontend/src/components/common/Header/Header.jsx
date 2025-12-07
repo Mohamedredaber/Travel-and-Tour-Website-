@@ -1,72 +1,87 @@
-import { useState } from "react";
-import { Container, Row } from "react-bootstrap";
-import { Prev } from "react-bootstrap/esm/PageItem";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
+// Header.jsx
+import { useEffect, useState } from "react";
+import { Container, Row, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import "../Header/Header.css";
 
-import { NavLink  } from "react-router-dom";
 function Header() {
-  const [togglemenu,settoggle]=useState(false)
-  const funtogglemenu =()=>{
-    settoggle((Prev)=>!Prev)
-  }
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+
+  // Toggle Offcanvas
+  const toggleOffcanvas = () => setShowOffcanvas(prev => !prev);
+  // Sticky header logic
+  const handleScroll = () => setIsSticky(window.scrollY >= 120);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+   
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <section className="header-section">
+    <header className={`header-section ${isSticky ? "is-sticky" : ""}`}>
       <Container>
         <Row>
-          <Navbar expand="lg" className="bg-body-tertiary mb-3">
-            <Navbar.Brand href="#">
-              <NavLink className="nav-link" to="/Footer">weekendmonks</NavLink>
-         </Navbar.Brand>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
-            <Navbar.Offcanvas
-              id={`offcanvasNavbar-expand-lg`}
-              aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
-              placement="end"
-              show={togglemenu}
-            >
+          <Navbar expand="lg" className="mb-3">
+            {/* Logo */}
+            <Navbar.Brand>
+              <NavLink className="nav-link p-0" to="/">
+                weekendmonks
+              </NavLink>
+            </Navbar.Brand>
 
-              <Offcanvas.Header>
-                <h1 className="logo">weekendmonks</h1>
-                <span className="navbar-toggler ms-auto" onClick={funtogglemenu}>
-                  <i className="bi bi-x-lg"></i>
-                </span>
+            {/* Toggle Offcanvas for small screens */}
+            <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={toggleOffcanvas} />
+            {/* Offcanvas menu */}
+            <Navbar.Offcanvas
+              id="offcanvasNavbar"
+              aria-labelledby="offcanvasNavbarLabel"
+              placement="end"
+              show={showOffcanvas}
+              onHide={toggleOffcanvas}
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title id="offcanvasNavbarLabel" className="logo">
+                  weekendmonks
+                </Offcanvas.Title>
               </Offcanvas.Header>
+
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <NavLink className="nav-link" to= "/">Home</NavLink>
-               <NavLink className="nav-link" to="/">About us</NavLink>
-               <NavLink className="nav-link" to="/">Tours</NavLink>
-               <NavDropdown
-                    title="Destination"
-                    id={`offcanvasNavbarDropdown-expand-lg`}
-                  >
-                    <NavDropdown.Item href="#action3">Morroco tour</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      spain tour
-                    </NavDropdown.Item>
-                    {/* <NavDropdown.Divider /> */}
-                    <NavDropdown.Item href="#action5">
-                        france tour
-                    </NavDropdown.Item>
+                  <NavLink className="nav-link" to="/">Home</NavLink>
+                  <NavLink className="nav-link" to="/about">About us</NavLink>
+                  <NavLink className="nav-link" to="/tours">Tours</NavLink>
+
+                  <NavDropdown title="Destination" id="offcanvasNavbarDropdown">
+                    <NavDropdown.Item href="#morocco">Morocco tour</NavDropdown.Item>
+                    <NavDropdown.Item href="#spain">Spain tour</NavDropdown.Item>
+                    <NavDropdown.Item href="#france">France tour</NavDropdown.Item>
                   </NavDropdown>
-                  <NavLink className="nav-link" to="/">Galery</NavLink>
-               <NavLink className="nav-link" to="/">Contact</NavLink>
-             </Nav>
+
+                  <NavLink className="nav-link" to="/gallery">Gallery</NavLink>
+                  <NavLink className="nav-link" to="/contact">Contact</NavLink>
+                </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
-            <div className="ms-md-4 ms-2">
-                      <NavLink className="primary-btn d-none d-sm-inline-block" to="/">book now</NavLink>
-                      <li className="d-inline-block d-lg-none ms-3  toggle_btn">
-                          <i className="bi bi-list" onClick={funtogglemenu}></i>
-                      </li>
+
+            {/* Book Now & mobile toggle */}
+            <div className="ms-md-4 ms-2 d-flex align-items-center">
+              <NavLink className="primary-btn d-none d-sm-inline-block" to="/book">
+                Book Now
+              </NavLink>
+
+              <button
+                className="d-inline-block d-lg-none ms-3 toggle_btn btn btn-link"
+                onClick={toggleOffcanvas}
+                aria-label="Toggle navigation"
+              >
+                <i className="bi bi-list" />
+              </button>
             </div>
           </Navbar>
         </Row>
       </Container>
-    </section>
+    </header>
   );
 }
+
 export default Header;

@@ -1,0 +1,43 @@
+header {
+  position: absolute;
+  top: 0px;
+  z-index: 9999;
+  padding: 12px 0px;
+  width: 100%;
+}
+header {
+  position: absolute;
+  top: 0;
+  z-index: 9999;
+  padding: 12px 0;
+  width: 100%;
+}
+
+header .navbar .navbar-brand a {
+  font-size: 22px;
+  color: var(--white);
+  line-height: 150%; 
+  font-weight: bold;
+  font-family: var(--fontFamily1);
+  text-transform: capitalize;
+}
+
+/* Offcanvas links */
+header .navbar .offcanvas-body a {
+  font-size: var(--bodyText);
+  color: var(--white) !important;
+  line-height: 150%;
+  font-weight: bold;
+  font-family: var(--fontFamily1);
+  text-transform: capitalize;
+}
+header .navbar .offcanvas-body a:hover{
+    color: var(--primaryClr) !important; 
+}
+/* Dropdown menu inside Offcanvas */
+header .navbar .offcanvas-body .dropdown-menu {
+  min-width: 12rem;
+}
+header .navbar .offcanvas-body .dropdown-menu .dropdown-item{
+    
+}

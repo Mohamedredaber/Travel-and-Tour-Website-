@@ -1,0 +1,29 @@
+.primary-btn {
+  background-color: var(--primaryClr);
+  color: var(--white);
+  padding: 10px 22px;
+  font-size: var(--bodyText);
+  font-weight: 600;
+  font-family: var(--fontFamily);
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Effet hover */
+.primary-btn:hover {
+  background-color: var(--secondaryClr); /* couleur secondaire */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+/* Effet clic (active) */
+.primary-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
